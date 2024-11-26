@@ -1,0 +1,21 @@
+FROM golang:1.23 AS builder
+
+WORKDIR /app
+
+COPY go.mod go.sum ./
+
+RUN go mod tidy
+
+COPY . .
+
+RUN go build -o ./_bin/server  main.go beef.go
+
+FROM ubuntu
+
+WORKDIR /app
+
+COPY --from=builder /app/_bin .
+
+EXPOSE 50051
+
+CMD ["./server"]

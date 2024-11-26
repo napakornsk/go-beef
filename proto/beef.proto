@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package beef;
+
+option go_package = "github.com/napakornsk/go-beef/proto";
+
+import "google/protobuf/empty.proto";
+
+message GetAllBeefResponse {
+    string data = 1; 
+}
+
+service BeefService {
+    rpc GetAllBeef (google.protobuf.Empty) returns (stream GetAllBeefResponse);
+}
